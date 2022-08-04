@@ -1,0 +1,41 @@
+﻿@model Kasa
+
+<h4>Giren - TL</h4>
+<hr />
+
+<div class="row">
+    <div class=" border col-md-4 pb-3">
+        <form asp-action="Giren">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Tarih" class="control-label"></label>
+                <input asp-for="Tarih" class="form-control" />
+                <span asp-validation-for="Tarih" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Aciklama" class="control-label"></label>
+                <input asp-for="Aciklama" class="form-control" />
+                <span asp-validation-for="Aciklama" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="GirenMiktar" class="control-label"></label>
+                <input asp-for="GirenMiktar" class="form-control" />
+                <span asp-validation-for="GirenMiktar" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <button type="submit" class="btn btn-primary" style="width:150px">Ekle</button>
+                <a asp-controller="Kasa" asp-action="Index" class="btn btn-secondary" style="width:150px">Vazgeç</a>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+
+
+
+
+

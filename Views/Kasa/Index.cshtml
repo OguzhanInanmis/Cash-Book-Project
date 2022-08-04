@@ -1,0 +1,119 @@
+﻿@*@model IEnumerable<Kasa>*@
+@using Defter.Controllers
+@model PageItem
+
+@{
+    ViewData["Title"] = "Index";
+}
+@{
+    double girenMiktar = 0;
+    double cikanMiktar = 0;
+    foreach (var obj in Model.proc_devir)
+    {
+        girenMiktar += obj.GirenMiktar;
+        cikanMiktar += obj.CikanMiktar;
+
+    }
+    double devir = girenMiktar - cikanMiktar;
+}
+
+
+
+<div class="container ">
+    <h1>Kasa Defteri</h1>
+    <div class="row pt-4">
+        <form asp-action="Index">
+            @using (Html.BeginForm())
+            {
+                <div class="col">
+                    <label for="birthdaytime">İlk Tarih= </label>
+                    <input type="date" class="m-1" name="ilkTarih" value="@DateTime.Now.ToString("yyyy'-'MM'-'dd")">
+                    <label for="birthdaytime" class="m-2" >Son Tarih=</label>
+                    <input type="date" class="m-1" name="sonTarih"  value="@DateTime.Now.ToString("yyyy'-'MM'-'dd")">
+                    <label for="tur" class="mx-3">Tür:</label>
+                    <select name="tur" >
+                            <option value="Hepsi">Hepsi</option> 
+                            <option value="giren">Giren</option> 
+                            <option value="cikan">Çıkan</option> 
+                    </select>
+                    <button type="submit" class="btn-md btn-primary" style="margin-top:10px">Filtrele</button>
+                    
+                </div>
+                <div class="col text-end" style="margin-top:10px">
+                    <label for="devir" class="mx-2">Devir : </label>
+                    <input type="text" value="@devir" class="form-control-sm text-light" disabled>
+@*                    Tür= <br />
+                    <input type="radio" name="tur" value="Hepsi" checked> Hepsi<br>
+                    @*Giren:   @Html.RadioButton("tur","Giren") *@ 
+                  @*  <input type="radio" name="tur" value="giren"> Giren<br>
+                    <input type="radio" name="tur" value="cikan"> Çıkan<br>   *@    
+                </div>
+                
+                <div class="col text-end" style="margin-top:10px">
+                </div>
+
+            }
+            
+        </form>
+    </div>
+</div>
+<br />
+<hr />
+
+<table class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Tarih
+            </th>
+            <th>
+                Tür
+            </th>
+            <th>
+                Açıklama
+            </th>
+            <th>
+                Giren Miktar
+            </th>
+            <th>
+                Çıkan Miktar
+            </th>
+            <th class="text-md-center">
+                Sil
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var obj in Model.proc_filtrele)
+        {
+
+            <tr>
+                <td width="15%">
+                    @obj.Tarih
+                </td>
+                <td width="10%">
+                    @obj.Tur
+                </td>
+                <td width="30%">
+                    @obj.Aciklama
+                </td>
+                <td width="20%">
+                    @obj.GirenMiktar
+                </td>
+                <td width="20%">
+                    @obj.CikanMiktar
+                </td>
+                <td width="5%">
+                    <a asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-outline-light"><i class="bi bi-trash3"></i> </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="container mt-3">
+    <div class="col">
+        <a asp-controller="Kasa" asp-action="Giren" class="btn btn-secondary p-2" style="width:150px"><i class="bi bi-arrow-90deg-down"></i>  Giren</a>
+        <a asp-controller="Kasa" asp-action="Cikan" class="btn btn-secondary p-2" style="width:150px"><i class="bi bi-arrow-90deg-up"></i>  Çıkan</a>
+    </div>
+
+</div>
